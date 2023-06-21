@@ -1,0 +1,87 @@
+﻿@page "/chat"
+@using MudBlazor
+@inject IJSRuntime JSRuntime
+
+<div class="wrapper">
+    <MudPaper Elevation="2" Class="chatbox">
+        <MudButtonGroup Variant="Variant.Text" FullWidth="true">
+            
+            <MudButton OnClick="() => SetPersonality()">Ellie</MudButton>
+            <MudButton OnClick="() => SetPersonality()">John</MudButton>
+            <MudButton OnClick="() => SetPersonality()">Hana</MudButton>
+        </MudButtonGroup>
+        <MudDivider />
+        <MudText Typo="Typo.h6">ChatBot</MudText>
+        <MudDivider />
+        <div class="message-list">
+            @foreach (var message in Messages)
+            {
+                <div class="@(message.Sender == "user" ? "message user" : "message bot")">
+                    <MudText Typo="Typo.body1">@message.Text</MudText>
+                </div>
+            }
+        </div>
+        <MudDivider />
+        <MudTextField @bind-Value="@InputMessage" Label="Type your message here" />
+        <MudButton Color="Color.Primary" OnClick="SendMessage">Send</MudButton>
+    </MudPaper>
+</div>
+
+<style>
+    .wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .chatbox {
+        width: 50%;
+    }
+
+    .message-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .message {
+        margin: 5px;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .user {
+        align-self: flex-end;
+        background-color: #DCF8C6;
+    }
+
+    .bot {
+        align-self: flex-start;
+        background-color: #FFFFFF;
+    }
+</style>
+
+@code {
+    private class Message
+    {
+        public string Sender { get; set; }
+        public string Text { get; set; }
+    }
+
+    private List<Message> Messages = new List<Message>();
+    private string InputMessage = string.Empty;
+    private string Personality = "Ellie";
+
+    private void SetPersonality()
+    {
+        
+        // TODO: Set personality in your chatbot logic
+    }
+
+    private void SendMessage()
+    {
+        Messages.Add(new Message { Sender = "user", Text = InputMessage });
+        InputMessage = string.Empty;
+        // TODO: Get bot response based on the personality and add to Messages
+    }
+}

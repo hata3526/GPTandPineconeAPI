@@ -1,0 +1,12 @@
+services:
+  server:
+    build:
+      dockerfile: cgptWebAPITest/Dockerfile
+    ports:
+      - 5000:80
+
+  client:
+    build:
+      dockerfile: ChatbotClient/Dockerfile
+    ports:
+      - 80:80
